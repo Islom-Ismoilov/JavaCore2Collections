@@ -9,6 +9,9 @@ import java.util.Set;
 
 public class WordFrequencyCounter {
     public static void main(String[] args) {
+        // Part 1
+        // Find and save song as a String
+
         String song = "In the town where I was born\n" +
                 "Lived a man who sailed to sea\n" +
                 "And he told us of his life\n" +
@@ -49,11 +52,17 @@ public class WordFrequencyCounter {
                 "We all live in a yellow submarine\n" +
                 "Yellow submarine, yellow submarine";
 
+        // Remove commas, newline characters, and convert to lowercase
         song = song.replaceAll("[,\\n]", "").toLowerCase();
+
+        // Split the song into an array of words
         String[] wordsArray = song.split(" ");
+
+        // Create an array to store word frequencies
         String[] uniqueWordsArray = new String[wordsArray.length];
         int[] wordFrequencies = new int[wordsArray.length];
 
+        // Count word frequencies and print the results
         int uniqueWordCount = 0;
         for (String word : wordsArray) {
             int index = indexOfWord(uniqueWordsArray, word, uniqueWordCount);
@@ -66,13 +75,16 @@ public class WordFrequencyCounter {
             }
         }
 
+        // Print unique words and their frequencies
         for (int i = 0; i < uniqueWordCount; i++) {
             System.out.println(uniqueWordsArray[i] + ": " + wordFrequencies[i]);
         }
 
+        // Part 2
         List<String> wordsList = new ArrayList<>();
         Set<String> uniqueWordsSet = new HashSet<>();
 
+        // Update Part1 to use a List to count words
         for (String word : wordsArray) {
             if (!uniqueWordsSet.contains(word)) {
                 wordsList.add(word);
@@ -80,14 +92,24 @@ public class WordFrequencyCounter {
             }
         }
 
+        // Print unique words without duplicates
         System.out.println("Unique Words: " + wordsList);
+
+        // Sort by string length
         Collections.sort(wordsList, (a, b) -> a.length() - b.length());
         System.out.println("Words sorted by length: " + wordsList);
 
+        // Part 3
+        // Remove all occurrences of "yellow" and "submarine" from the List
         wordsList.removeIf(word -> word.equals("yellow") || word.equals("submarine"));
+
+        // Print the resulting List
         System.out.println("List after removing 'yellow' and 'submarine': " + wordsList);
 
+        // Part 4
         try (FileWriter fileWriter = new FileWriter("song.txt")) {
+
+            // Save a song "beatles yellow submarine" to a txt file
             fileWriter.write("In the town where I was born\n" +
                     "Lived a man who sailed to sea\n" +
                     "And he told us of his life\n" +
@@ -139,7 +161,9 @@ public class WordFrequencyCounter {
                 songFromFile.append(line);
             }
 
+            // Define a custom exception: BeatlesException
             try {
+                // Create a method to verify if a random string is found in the song
                 verifyStringInSong(songFromFile.toString(), "Show must go on!");
             } catch (BeatlesException e) {
                 System.err.println("Exception caught: " + e.getMessage());
@@ -149,6 +173,7 @@ public class WordFrequencyCounter {
         }
     }
 
+    // verifyStringInSong method
     private static void verifyStringInSong(String songContent, String searchString) throws BeatlesException {
         if (!songContent.contains(searchString)) {
             throw new BeatlesException("Beatles");

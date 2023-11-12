@@ -10,28 +10,34 @@ public class Regex {
         String input3 = "test 2667843 (test_email@griddynamics.com) test 67483 some string";
         String input4 = "app=edi_adapter_splitter wingtipsTrace=225debfbe6e5fac7 poiFileName=Integration_test_Contract INFO  LogUtils - POI file name: [Integration_test_Contract], total number of orders successfully processed: [2]";
 
+        // 1. Find and return true or false if String contains orderUUID
         boolean containsOrderUUID1 = containsOrderUUID(input1);
         System.out.println("Task 1 - Contains orderUUID: " + containsOrderUUID1);
 
         boolean containsOrderUUID2 = containsOrderUUID(input2);
         System.out.println("Task 1 - Contains orderUUID: " + containsOrderUUID2);
 
+        // 2. Find and return orderUUID substring from string
         String orderUUID = findOrderUUID(input2);
         System.out.println("Task 2 - orderUUID: " + orderUUID);
 
+        // 3. Find and return user email from string
         String userEmail = findUserEmail(input3);
         System.out.println("Task 3 - User email: " + userEmail);
 
+        // 4. Find and return how many orders were created from this string
         int orderCount = findOrderCount(input4);
         System.out.println("Task 4 - Order count: " + orderCount);
     }
 
+    // 1. Find and return true or false if String contains orderUUID
     public static boolean containsOrderUUID(String input) {
         Pattern pattern = Pattern.compile("\\borderUUID=[a-f0-9]{8}-([a-f0-9]{4}-){3}[a-f0-9]{12}\\b");
         Matcher matcher = pattern.matcher(input);
         return matcher.find();
     }
 
+    // 2. Find and return orderUUID substring from string
     public static String findOrderUUID(String input) {
         Pattern pattern = Pattern.compile("orderUUID=([a-f0-9]{8}-([a-f0-9]{4}-){3}[a-f0-9]{12})");
         Matcher matcher = pattern.matcher(input);
@@ -41,6 +47,7 @@ public class Regex {
         return null;
     }
 
+    // 3. Find and return user email from string
     public static String findUserEmail(String input) {
         Pattern pattern = Pattern.compile("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}");
         Matcher matcher = pattern.matcher(input);
@@ -50,6 +57,7 @@ public class Regex {
         return null;
     }
 
+    // 4. Find and return how many orders were created from this string
     public static int findOrderCount(String input) {
         Pattern pattern = Pattern.compile("total number of orders successfully processed: \\[(\\d+)]");
         Matcher matcher = pattern.matcher(input);
