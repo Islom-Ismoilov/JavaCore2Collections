@@ -12,9 +12,45 @@ public class WordFrequencyCounter {
         // Part 1
         // Find and save song as a String
 
-        String song = "Oh, I get by with a little help from my friends\n" +
-                "Mm, I get high with a little help from my friends\n" +
-                "Mm, I'm gonna try with a little help from my friends";
+        String song = "In the town where I was born\n" +
+                "Lived a man who sailed to sea\n" +
+                "And he told us of his life\n" +
+                "In the land of submarines\n" +
+                "So we sailed on to the sun\n" +
+                "'Til we found a sea of green\n" +
+                "And we lived beneath the waves\n" +
+                "In our yellow submarine\n" +
+                "We all live in a yellow submarine\n" +
+                "Yellow submarine, yellow submarine\n" +
+                "We all live in a yellow submarine\n" +
+                "Yellow submarine, yellow submarine\n" +
+                "And our friends are all aboard\n" +
+                "Many more of them live next door\n" +
+                "And the band begins to play\n" +
+                "We all live in a yellow submarine\n" +
+                "Yellow submarine, yellow submarine\n" +
+                "We all live in a yellow submarine\n" +
+                "Yellow submarine, yellow submarine\n" +
+                "Full steam ahead, Mister Boatswain, full steam ahead\n" +
+                "Full steam ahead it is, Sergeant\n" +
+                "(Cut the cable, drop the cable)\n" +
+                "Aye-aye, sir, aye-aye\n" +
+                "Captain, captain\n" +
+                "As we live a life of ease (a life of ease)\n" +
+                "Every one of us (every one of us)\n" +
+                "Has all we need (has all we need)\n" +
+                "Sky of blue (sky of blue)\n" +
+                "And sea of green (sea of green)\n" +
+                "In our yellow (in our yellow)\n" +
+                "Submarine (submarine, aha)\n" +
+                "We all live in a yellow submarine\n" +
+                "A yellow submarine, yellow submarine\n" +
+                "We all live in a yellow submarine\n" +
+                "A yellow submarine, yellow submarine\n" +
+                "We all live in a yellow submarine\n" +
+                "Yellow submarine, yellow submarine\n" +
+                "We all live in a yellow submarine\n" +
+                "Yellow submarine, yellow submarine";
 
         // Remove commas, newline characters, and convert to lowercase
         song = song.replaceAll("[,\\n]", "").toLowerCase();
@@ -48,7 +84,7 @@ public class WordFrequencyCounter {
         List<String> wordsList = new ArrayList<>();
         Set<String> uniqueWordsSet = new HashSet<>();
 
-        // Update Part 1 to use a List to count words
+        // Update Part1 to use a List to count words
         for (String word : wordsArray) {
             if (!uniqueWordsSet.contains(word)) {
                 wordsList.add(word);
@@ -59,7 +95,7 @@ public class WordFrequencyCounter {
         // Print unique words without duplicates
         System.out.println("Unique Words: " + wordsList);
 
-        // Sort words by string length
+        // Sort by string length
         Collections.sort(wordsList, (a, b) -> a.length() - b.length());
         System.out.println("Words sorted by length: " + wordsList);
 
@@ -72,31 +108,75 @@ public class WordFrequencyCounter {
 
         // Part 4
         try (FileWriter fileWriter = new FileWriter("song.txt")) {
-            // Save song "beatles yellow submarine" to a txt file
-            fileWriter.write("beatles yellow submarine");
+
+            // Save a song "beatles yellow submarine" to a txt file
+            fileWriter.write("In the town where I was born\n" +
+                    "Lived a man who sailed to sea\n" +
+                    "And he told us of his life\n" +
+                    "In the land of submarines\n" +
+                    "So we sailed on to the sun\n" +
+                    "'Til we found a sea of green\n" +
+                    "And we lived beneath the waves\n" +
+                    "In our yellow submarine\n" +
+                    "We all live in a yellow submarine\n" +
+                    "Yellow submarine, yellow submarine\n" +
+                    "We all live in a yellow submarine\n" +
+                    "Yellow submarine, yellow submarine\n" +
+                    "And our friends are all aboard\n" +
+                    "Many more of them live next door\n" +
+                    "And the band begins to play\n" +
+                    "We all live in a yellow submarine\n" +
+                    "Yellow submarine, yellow submarine\n" +
+                    "We all live in a yellow submarine\n" +
+                    "Yellow submarine, yellow submarine\n" +
+                    "Full steam ahead, Mister Boatswain, full steam ahead\n" +
+                    "Full steam ahead it is, Sergeant\n" +
+                    "(Cut the cable, drop the cable)\n" +
+                    "Aye-aye, sir, aye-aye\n" +
+                    "Captain, captain\n" +
+                    "As we live a life of ease (a life of ease)\n" +
+                    "Every one of us (every one of us)\n" +
+                    "Has all we need (has all we need)\n" +
+                    "Sky of blue (sky of blue)\n" +
+                    "And sea of green (sea of green)\n" +
+                    "In our yellow (in our yellow)\n" +
+                    "Submarine (submarine, aha)\n" +
+                    "We all live in a yellow submarine\n" +
+                    "A yellow submarine, yellow submarine\n" +
+                    "We all live in a yellow submarine\n" +
+                    "A yellow submarine, yellow submarine\n" +
+                    "We all live in a yellow submarine\n" +
+                    "Yellow submarine, yellow submarine\n" +
+                    "We all live in a yellow submarine\n" +
+                    "Yellow submarine, yellow submarine");
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         try (FileReader fileReader = new FileReader("song.txt");
              BufferedReader bufferedReader = new BufferedReader(fileReader)) {
-            String line;
             StringBuilder songFromFile = new StringBuilder();
+            String line;
             while ((line = bufferedReader.readLine()) != null) {
                 songFromFile.append(line);
             }
+
             // Define a custom exception: BeatlesException
             try {
                 // Create a method to verify if a random string is found in the song
-                String randomStringToCheck = "Show must go on!";
-                if (!songFromFile.toString().contains(randomStringToCheck)) {
-                    throw new BeatlesException("Beatles");
-                }
+                verifyStringInSong(songFromFile.toString(), "Show must go on!");
             } catch (BeatlesException e) {
                 System.err.println("Exception caught: " + e.getMessage());
             }
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    // verifyStringInSong method
+    private static void verifyStringInSong(String songContent, String searchString) throws BeatlesException {
+        if (!songContent.contains(searchString)) {
+            throw new BeatlesException("Beatles");
         }
     }
 
@@ -115,4 +195,3 @@ class BeatlesException extends Exception {
         super(message);
     }
 }
-
